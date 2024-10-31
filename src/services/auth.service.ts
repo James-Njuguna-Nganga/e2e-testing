@@ -130,7 +130,7 @@ export class AuthService{
 
         await sendMail({
             email: user.email,
-            subject: 'Reset your password - Plana',
+            subject: 'Reset your password - Agro-Connect KE',
             template: templatePath,
             body,
           });
