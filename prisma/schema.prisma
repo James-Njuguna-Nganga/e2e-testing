@@ -22,7 +22,7 @@ model User {
   resetToken           String?
   resetTokenExpiry     DateTime?
   orders             Order[]
-  products        Produce[]   @relation("Farmer")
+  products        Produce[]   @relation("FARMER")
 }
 
 model Category {
@@ -46,7 +46,7 @@ model Produce {
   orderItems        OrderItem[]
   category    Category  @relation(fields: [categoryId], references: [id])
   farmerId    String
-  farmer     User      @relation("Farmer", fields: [farmerId], references: [id], onUpdate: NoAction)
+  farmer     User      @relation("FARMER", fields: [farmerId], references: [id], onUpdate: NoAction)
 }
 
 model Order {

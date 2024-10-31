@@ -96,6 +96,9 @@ export class AuthService{
           data: { password: newPasswordHash },
         });
       }
+      static async getUserById(id: string): Promise<User | null> {
+        return prisma.user.findUnique({ where: { id } });
+      }
       async getUserById(id: string): Promise<User | null> {
         return prisma.user.findUnique({ where: { id } });
       }
