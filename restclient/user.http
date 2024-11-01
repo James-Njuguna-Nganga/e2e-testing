@@ -21,11 +21,11 @@ Content-Type: application/json
 
 ###REQUEST FARMER ROLE
 POST http://localhost:3000/api/user/request-farmer
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0YzU0MjI0NC05MWIzLTQxMWQtYjliMy1kYzZhZGQ2NjFmYzYiLCJlbWFpbCI6ImVhcmxqb2UwNkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IisyNTQxMTIyNzIyNTMiLCJmaXJzdE5hbWUiOiJEYW5pZWwiLCJsYXN0TmFtZSI6IktpdGhla2EiLCJyb2xlIjoiQlVZRVIiLCJpYXQiOjE3MzA0MTUzMDUsImV4cCI6MTczMDQyOTcwNX0.iWTZdyq45PQf8WcZaupCVQZmLgC2QWLho8sy9NCvZEM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMmNhYzA4OC1jYWI4LTRkOGMtODYwYy00NzBiNGM4YjhmMTkiLCJlbWFpbCI6ImVhcmxqb2UwNkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IisyNTQxMTIyNzIyNTMiLCJmaXJzdE5hbWUiOiJEYW5pZWwiLCJsYXN0TmFtZSI6IktpdGhla2EiLCJyb2xlIjoiQlVZRVIiLCJpYXQiOjE3MzA0NTk1MTIsImV4cCI6MTczMDQ3MzkxMn0.5LG1wBSXqlCck78_syizKtBdTufxInbBkG5QWyHwTPs
 Content-Type: application/json
 
 {
-    "userId": "4c542244-91b3-411d-b9b3-dc6add661fc6"
+    "userId": "12cac088-cab8-4d8c-860c-470b4c8b8f19"
 }
 
 ###APPROVE FARMER ROLE
@@ -34,7 +34,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkYTQ1MGE0L
 Content-Type: application/json
 
 {
-    "userId": "4c542244-91b3-411d-b9b3-dc6add661fc6"
+    "userId": "12cac088-cab8-4d8c-860c-470b4c8b8f19"
 }
 
 ###GET FARMER REQUESTS

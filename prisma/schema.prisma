@@ -37,18 +37,21 @@ model Produce {
   id          String    @id @default(uuid())
   title       String
   description String
+  price       Decimal   @db.Decimal(10,2)
+  quantity    Int       @default(0)
+  unit        String    // e.g., "kg", "pieces"
   date        DateTime
   location    String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   categoryId  String
-  imageUrl   String
-  orderItems        OrderItem[]
+  imageUrl    String
+  status      ProduceStatus @default(AVAILABLE)
+  orderItems  OrderItem[]
   category    Category  @relation(fields: [categoryId], references: [id])
   farmerId    String
-  farmer     User      @relation("FARMER", fields: [farmerId], references: [id], onUpdate: NoAction)
+  farmer      User      @relation("FARMER", fields: [farmerId], references: [id], onUpdate: NoAction)
 }
-
 model Order {
   id                String          @id @default(uuid())
   userId            String
@@ -91,4 +94,10 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
+}
+
+enum ProduceStatus {
+  AVAILABLE
+  OUT_OF_STOCK
+  ARCHIVED
 }
