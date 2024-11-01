@@ -4,6 +4,7 @@ import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import categoryRoutes from './routes/category.routes';
 import produceRoutes from './routes/produce.routes';
+import orderRoutes from './routes/order.routes';
 
 
 const cors = require('cors');
@@ -17,6 +18,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', produceRoutes);
+app.use('/api/order', orderRoutes);
 
 
 
