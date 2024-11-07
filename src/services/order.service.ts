@@ -1,5 +1,6 @@
 // order.service.ts
 import { PrismaClient, Order, OrderItem, Prisma, OrderStatus } from '@prisma/client';
+import { PaymentService } from './payment.service';
 
 const prisma = new PrismaClient();
 
@@ -9,56 +10,66 @@ interface OrderItemInput {
 }
 
 interface CreateOrderInput {
-  userId: string;
-  items: OrderItemInput[];
+    userId: string;
+    phoneNumber: string;
+    items: OrderItemInput[];
 }
 
 export class OrderService {
-  static async createOrder(input: CreateOrderInput): Promise<Order> {
-    return await prisma.$transaction(async (tx) => {
+  private static paymentService: PaymentService;
+
+  // Initialize the payment service
+  static {
+    OrderService.paymentService = new PaymentService(prisma);
+  }
+  static async createOrder(input: CreateOrderInput): Promise<{ order: Order; paymentStatus: string; message: string }> {
+    const order = await prisma.$transaction(async (tx) => {
       let totalPrice = new Prisma.Decimal(0);
       const orderItems = [];
-
-      // Check availability and calculate price
+  
+      const user = await tx.user.findUnique({
+        where: { id: input.userId },
+        select: {
+          id: true,
+          email: true,
+          firstName: true,
+          lastName: true
+        }
+      });
+  
+      if (!user) {
+        throw new Error('User not found');
+      }
+  
+      // Validate items and calculate price
       for (const item of input.items) {
         const produce = await tx.produce.findUnique({
           where: { id: item.produceId }
         });
-
+  
         if (!produce) {
           throw new Error(`Product ${item.produceId} not found`);
         }
-
+  
         if (produce.quantity < item.quantity) {
-          throw new Error(`Could not place order, only ${produce.quantity} units available for ${produce.title}`);
+          throw new Error(`Only ${produce.quantity} units available`);
         }
-
-        // Calculate item price
-        const itemPrice = produce.price.mul(item.quantity);
-        totalPrice = totalPrice.add(itemPrice);
-
-        // Prepare order item
+  
+        totalPrice = totalPrice.add(produce.price.mul(item.quantity));
         orderItems.push({
           produceId: item.produceId,
           quantity: item.quantity,
           price: produce.price
         });
-
-        // Update produce quantity
-        await tx.produce.update({
-          where: { id: item.produceId },
-          data: {
-            quantity: produce.quantity - item.quantity,
-            status: produce.quantity - item.quantity === 0 ? 'OUT_OF_STOCK' : 'AVAILABLE'
-          }
-        });
       }
-
-      // Create order with items
-      return tx.order.create({
+  
+      // Create initial order
+      return await tx.order.create({
         data: {
-          userId: input.userId,
+          userId: user.id,
           totalPrice,
+          status: 'PENDING',
+          paymentStatus: 'PENDING',
           orderItems: {
             create: orderItems
           }
@@ -73,8 +84,87 @@ export class OrderService {
         }
       });
     });
+  
+    try {
+      const payment = await OrderService.paymentService.initiateStkPush(
+        Number(order.totalPrice),
+        input.phoneNumber,
+        order.id
+      );
+  
+      const { status, message } = await OrderService.paymentService.checkPaymentStatusRecursive(
+        payment.invoice.invoice_id
+      );
+  
+      if (status === 'COMPLETE') {
+        // Payment successful - update produce quantities
+        await prisma.$transaction(async (tx) => {
+          // Update order status
+          await tx.order.update({
+            where: { id: order.id },
+            data: {
+              status: 'CONFIRMED',
+              paymentStatus: 'COMPLETED',
+              paymentId: payment.invoice.invoice_id
+            }
+          });
+  
+          // Update produce quantities
+          for (const item of order.orderItems) {
+            await tx.produce.update({
+              where: { id: item.produceId },
+              data: {
+                quantity: {
+                  decrement: item.quantity
+                },
+                status: {
+                  set: item.quantity === 0 ? 'OUT_OF_STOCK' : 'AVAILABLE'
+                }
+              }
+            });
+          }
+        });
+  
+        return { 
+          order, 
+          paymentStatus: status, 
+          message: 'Order placed successfully' 
+        };
+      } else {
+        // Payment failed - update order status only
+        await prisma.order.update({
+          where: { id: order.id },
+          data: {
+            status: 'CANCELLED',
+            paymentStatus: 'FAILED',
+            paymentId: payment.invoice.invoice_id
+          }
+        });
+  
+        return { 
+          order, 
+          paymentStatus: 'FAILED', 
+          message: 'Failed to place order: Payment was unsuccessful' 
+        };
+      }
+  
+    } catch (error: any) {
+      // Handle payment processing error
+      await prisma.order.update({
+        where: { id: order.id },
+        data: {
+          status: 'CANCELLED',
+          paymentStatus: 'FAILED'
+        }
+      });
+  
+      return { 
+        order, 
+        paymentStatus: 'ERROR', 
+        message: `Failed to place order: ${error.message}` 
+      };
+    }
   }
-
   static async getUserOrders(userId: string, skip = 0, take = 10): Promise<{ orders: Order[]; total: number }> {
     const [orders, total] = await Promise.all([
       prisma.order.findMany({

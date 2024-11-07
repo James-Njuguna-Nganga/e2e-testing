@@ -12,6 +12,7 @@ export class OrderController {
 
       const order = await OrderService.createOrder({
         userId: req.user.userId,
+        phoneNumber: req.body.phoneNumber,
         items: req.body.items
       });
 
