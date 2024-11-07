@@ -1,0 +1,103 @@
+@baseUrl = http://localhost:3000/api/product
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMmNhYzA4OC1jYWI4LTRkOGMtODYwYy00NzBiNGM4YjhmMTkiLCJlbWFpbCI6ImVhcmxqb2UwNkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IisyNTQxMTIyNzIyNTMiLCJmaXJzdE5hbWUiOiJEYW5pZWwiLCJsYXN0TmFtZSI6IktpdGhla2EiLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzMwNDYxMTAxLCJleHAiOjE3MzA0NzU1MDF9.SgBhVWbne-9Nq3sSsKjADABy7E0U0z3MvErslRX39Rc
+
+### Login as farmer to get token
+# @name login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "earljoe06@gmail.com",
+    "password": "password"
+}
+
+### PUBLIC ROUTES ###
+
+### Get all produce
+GET {{baseUrl}}
+
+### Search produce
+GET {{baseUrl}}/search?q=tomatoes
+
+### Get produce by category
+GET {{baseUrl}}/category/4d9a2644-1f6b-403f-ac68-b3b672e7d89f
+
+### Get specific produce
+GET {{baseUrl}}/f8292fb4-c4c9-4278-a522-9b7d85798fdb
+
+### Get farmer's produce
+GET {{baseUrl}}/farmer/products
+
+### PROTECTED ROUTES (Require Farmer Role) ###
+
+### Create produce
+POST {{baseUrl}}
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----FormBoundary
+
+------FormBoundary
+Content-Disposition: form-data; name="title"
+
+Fresh Tomatoes
+------FormBoundary
+Content-Disposition: form-data; name="description"
+
+Farm fresh organic tomatoes
+------FormBoundary
+Content-Disposition: form-data; name="price"
+
+120.00
+------FormBoundary
+Content-Disposition: form-data; name="quantity"
+
+50
+------FormBoundary
+Content-Disposition: form-data; name="unit"
+
+kg
+------FormBoundary
+Content-Disposition: form-data; name="date"
+
+2024-03-15
+------FormBoundary
+Content-Disposition: form-data; name="location"
+
+Nairobi
+------FormBoundary
+Content-Disposition: form-data; name="categoryId"
+
+4d9a2644-1f6b-403f-ac68-b3b672e7d89f
+------FormBoundary
+Content-Disposition: form-data; name="image"; filename="tomatoes.jpg"
+Content-Type: image/jpeg
+
+< /home/earljoe/Downloads/clubMbuzi.png
+------FormBoundary--
+
+### Update produce
+PUT {{baseUrl}}/f8292fb4-c4c9-4278-a522-9b7d85798fdb
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----FormBoundary
+
+------FormBoundary
+Content-Disposition: form-data; name="price"
+
+150.00
+------FormBoundary
+Content-Disposition: form-data; name="quantity"
+
+40
+------FormBoundary--
+
+### Delete produce
+DELETE {{baseUrl}}/f8292fb4-c4c9-4278-a522-9b7d85798fdb
+Authorization: Bearer {{token}}
+
+### Update produce status
+PATCH {{baseUrl}}/f8292fb4-c4c9-4278-a522-9b7d85798fdb/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "status": "OUT_OF_STOCK"
+}

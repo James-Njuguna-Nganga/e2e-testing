@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Farmer Account Request Status</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      background-color: #f44336;
+      padding: 20px;
+      border-radius: 8px 8px 0 0;
+      color: white;
+    }
+    .content {
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #777;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+    .button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Farmer Account Request Update</h1>
+    </div>
+    <div class="content">
+      <p>Dear <%= user.firstName %> <%= user.lastName %>,</p>
+      
+      <p>Thank you for your interest in becoming a verified farmer on Agro-Connect KE. After careful review of your application, we regret to inform you that we are unable to approve your request at this time.</p>
+
+      <p>This decision may be due to one or more of the following reasons:</p>
+      <ul>
+        <li>Incomplete documentation</li>
+        <li>Unable to verify farming activities</li>
+        <li>Missing required certifications</li>
+        <li>Insufficient agricultural experience</li>
+      </ul>
+
+      <p>You are welcome to submit a new application after:</p>
+      <ul>
+        <li>Gathering all necessary documentation</li>
+        <li>Obtaining required certifications</li>
+        <li>Gaining more agricultural experience</li>
+      </ul>
+
+      <p>If you would like to discuss this decision or need guidance on improving your application, please contact our support team at:</p>
+      <p><a href="mailto:support@agro-connect.com">support@agro-connect.com</a></p>
+
+      <p>We appreciate your interest in Agro-Connect KE and hope to see your improved application in the future.</p>
+
+      <p>Best regards,<br>The Agro-Connect KE Team</p>
+    </div>
+    <div class="footer">
+      <p>This is an automated message. Please do not reply to this email.</p>
+      <p>© 2024 Agro-Connect KE. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

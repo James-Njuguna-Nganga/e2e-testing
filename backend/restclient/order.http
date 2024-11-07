@@ -1,0 +1,70 @@
+@baseUrl = http://localhost:3000/api/order
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMmNhYzA4OC1jYWI4LTRkOGMtODYwYy00NzBiNGM4YjhmMTkiLCJlbWFpbCI6ImVhcmxqb2UwNkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IisyNTQxMTIyNzIyNTMiLCJmaXJzdE5hbWUiOiJEYW5pZWwiLCJsYXN0TmFtZSI6IktpdGhla2EiLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzMwOTYzNzk1LCJleHAiOjE3MzA5NzgxOTV9.Au7OZQ7ph_SR_6xuvkiDx5gxvT4HX8t75XUBTotwLhE
+
+### Login as buyer (to get token)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"earljoe06@gmail.com",
+    "password": "password"
+}
+
+### Create new order
+POST {{baseUrl}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "items": [
+        {
+            "produceId": "56134e39-d5a0-451c-b053-6f7d2a6016e0",
+            "quantity": 5
+        },
+        {
+            "produceId": "cbad1782-2a14-4730-a653-e0aaf195681b",
+            "quantity": 3
+        }
+    ],
+    "phoneNumber": "+254112272250"
+}
+
+### Get my orders (buyer)
+GET {{baseUrl}}/my-orders
+Authorization: Bearer {{token}}
+
+### Login as farmer
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "earljoe06@gmail.com",
+    "password": "password"
+}
+
+### Get farmer's orders
+GET {{baseUrl}}/farmer-orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMmNhYzA4OC1jYWI4LTRkOGMtODYwYy00NzBiNGM4YjhmMTkiLCJlbWFpbCI6ImVhcmxqb2UwNkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IisyNTQxMTIyNzIyNTMiLCJmaXJzdE5hbWUiOiJEYW5pZWwiLCJsYXN0TmFtZSI6IktpdGhla2EiLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzMwNDkxNTY1LCJleHAiOjE3MzA1MDU5NjV9.jbpDb9zs3uFsrTTShecjbzNjH9zH6JEy6GkNLGXiHWM
+
+### Login as admin
+# @name adminLogin
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "password123"
+}
+
+### Get all orders (admin only)
+GET {{baseUrl}}/all
+# Authorization: Bearer {{adminLogin.response.body.token}}
+
+### Update order status (admin only)
+PATCH {{baseUrl}}/d7a66de8-1434-4455-83f7-2d3ff1ef72bb/status
+Authorization: Bearer {{adminLogin.response.body.token}}
+Content-Type: application/json
+
+{
+    "status": "SHIPPED"
+}
