@@ -1,0 +1,28 @@
+.nav-link {
+    @apply text-gray-700 hover:text-green-600 px-3 py-2 rounded-md font-medium transition-colors;
+  }
+  
+  .dropdown-menu {
+    @apply absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5;
+    animation: slideIn 0.2s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .logo {
+    @apply text-2xl font-bold text-green-600;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .nav-icon {
+    @apply h-6 w-6 text-gray-700 hover:text-green-600 transition-colors;
+  }

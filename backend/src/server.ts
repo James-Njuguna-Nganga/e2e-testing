@@ -1,5 +1,6 @@
 import app from "./app";
 import dotenv from "dotenv";
+import cors from 'cors';
 
 // Load environment variables
 dotenv.config();
@@ -8,6 +9,11 @@ dotenv.config();
 process.env.TZ = process.env.TZ || 'Africa/Nairobi';
 
 const PORT = process.env.PORT || 3000;
+app.use(cors({
+  origin: 'http://localhost:4200', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  allowedHeaders: ['Content-Type', 'Authorization'] 
+}));
 
 // Log the server's current time when starting
 console.log(`Server starting at: ${new Date().toLocaleString('en-US', { timeZone: process.env.TZ })}`);

@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000/api/product
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMmNhYzA4OC1jYWI4LTRkOGMtODYwYy00NzBiNGM4YjhmMTkiLCJlbWFpbCI6ImVhcmxqb2UwNkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IisyNTQxMTIyNzIyNTMiLCJmaXJzdE5hbWUiOiJEYW5pZWwiLCJsYXN0TmFtZSI6IktpdGhla2EiLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzMwNDYxMTAxLCJleHAiOjE3MzA0NzU1MDF9.SgBhVWbne-9Nq3sSsKjADABy7E0U0z3MvErslRX39Rc
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMmNhYzA4OC1jYWI4LTRkOGMtODYwYy00NzBiNGM4YjhmMTkiLCJlbWFpbCI6ImVhcmxqb2UwNkBnbWFpbC5jb20iLCJwaG9uZU51bWJlciI6IisyNTQxMTIyNzIyNTMiLCJmaXJzdE5hbWUiOiJEYW5pZWwiLCJsYXN0TmFtZSI6IktpdGhla2EiLCJyb2xlIjoiRkFSTUVSIiwiaWF0IjoxNzMwNDkxMjQ0LCJleHAiOjE3MzA1MDU2NDR9.0c6i7i1ZInsLj-LwxooBqrOcKcZEsgClnwxcggvfdMg
 
 ### Login as farmer to get token
 # @name login
@@ -38,15 +38,15 @@ Content-Type: multipart/form-data; boundary=----FormBoundary
 ------FormBoundary
 Content-Disposition: form-data; name="title"
 
-Fresh Tomatoes
+Fresh Meat
 ------FormBoundary
 Content-Disposition: form-data; name="description"
 
-Farm fresh organic tomatoes
+Farm raised beef
 ------FormBoundary
 Content-Disposition: form-data; name="price"
 
-120.00
+600.00
 ------FormBoundary
 Content-Disposition: form-data; name="quantity"
 
