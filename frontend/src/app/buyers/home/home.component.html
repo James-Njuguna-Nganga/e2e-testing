@@ -16,13 +16,14 @@
           <h2 class="text-2xl md:text-3xl text-white font-light mb-4 animate-slideUp">
             {{slide.text}}
           </h2>
-          <button *ngIf="!authService.isLoggedIn" 
-                  class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors animate-slideUp">
+          <button *ngIf="!authService.isLoggedIn()"
+                  routerLink="/register" 
+                  class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 cursor-pointer z-10 relative">
             Get Started
           </button>
-          <button *ngIf="authService.isLoggedIn" 
+          <button *ngIf="authService.isLoggedIn()" 
                   routerLink="/products"
-                  class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors animate-slideUp">
+                  class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105 cursor-pointer z-10 relative">
             View Products
           </button>
         </div>
@@ -55,17 +56,33 @@
       
       <!-- Filters -->
       <div class="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <select class="form-select border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
+        <select 
+          [(ngModel)]="selectedFarmer"
+          (change)="onFarmerChange()"
+          class="form-select border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
           <option value="">All Farmers</option>
-          <!-- Add farmer options -->
+          <option *ngFor="let farmer of farmers" [value]="farmer.id">
+            {{farmer.firstName}} {{farmer.lastName}}
+          </option>
         </select>
-        <select class="form-select border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
+      
+        <select 
+          [(ngModel)]="selectedCategory"
+          (change)="onCategoryChange()"
+          class="form-select border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
           <option value="">All Categories</option>
-          <!-- Add category options -->
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{category.name}}
+          </option>
         </select>
-        <input type="text" 
-               placeholder="Search products..." 
-               class="form-input border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
+      
+        <div class="relative">
+          <input type="text" 
+                 [(ngModel)]="searchQuery"
+                 (keyup)="onSearch()"
+                 placeholder="Search products..." 
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
+        </div>
       </div>
   
       <!-- Products Grid -->
@@ -132,4 +149,3 @@
     </div>
   </section>
   <app-footer></app-footer>
-  

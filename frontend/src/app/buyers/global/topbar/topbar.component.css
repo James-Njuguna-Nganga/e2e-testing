@@ -26,3 +26,11 @@
   .nav-icon {
     @apply h-6 w-6 text-gray-700 hover:text-green-600 transition-colors;
   }
+
+.user-menu-container {
+  @apply relative inline-block text-left;
+}
+
+.user-menu-container button:focus {
+  @apply outline-none ring-2 ring-green-500 ring-offset-2 rounded-full;
+}

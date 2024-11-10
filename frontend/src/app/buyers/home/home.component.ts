@@ -4,15 +4,20 @@ import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { TopbarComponent } from "../global/topbar/topbar.component";
 import { FooterComponent } from "../global/footer/footer.component";
+import { RouterModule } from '@angular/router';
+import { CategoryService } from '../../services/category.service';
+import { UserService } from '../../services/user.service';
+import { FormsModule } from '@angular/forms';
+import { Product, Category, Farmer } from '../../models/responses';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, TopbarComponent, FooterComponent],
+  imports: [CommonModule, TopbarComponent, FooterComponent, RouterModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   currentSlide = 0;
   slideInterval: any
 
@@ -33,24 +38,73 @@ export class HomeComponent {
       text: 'Premium dairy and livestock products from certified farmers'
     }
   ];
-  products: any[] = [];
-  farmers: any[] = [];
-  categories: any[] = [];
+  products: Product[] = [];
+  farmers: Farmer[] = [];
+  categories: Category[] = [];
+  searchQuery: string = '';
+  selectedFarmer: string = '';
+  selectedCategory: string = '';
 
   constructor(
     public authService: AuthService,
-    private productService: ProductService
+    private productService: ProductService,
+    private categoryService: CategoryService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
     this.loadProducts();
     this.startSlideShow();
+    this.loadCategories();
+    this.loadFarmers();
   }
 
   loadProducts() {
-    this.productService.getAllProducts(0, 3).subscribe(
-      (data: any) => this.products = data
+    this.productService.getAllProducts(0, 3).subscribe({
+      next: (response) => {
+        this.products = response.produce;
+      },
+      error: (error) => console.error('Error loading products:', error)
+    });
+  }
+
+  loadCategories() {
+    this.categoryService.getAllCategories().subscribe({
+      next: (response) => {
+        this.categories = response.categories;
+      },
+      error: (error) => console.error('Error loading categories:', error)
+    });
+  }
+
+  loadFarmers() {
+    this.userService.getAllFarmers().subscribe(
+      (data: any) => {
+        this.farmers = data;
+      },
+      error => console.error('Error loading farmers:', error)
     );
+  }
+
+  onSearch() {
+    this.productService.searchProducts(
+      this.searchQuery,
+      this.selectedFarmer,
+      this.selectedCategory
+    ).subscribe({
+      next: (response) => {
+        this.products = response.produce;
+      },
+      error: (error) => console.error('Error searching products:', error)
+    });
+  }
+
+  onFarmerChange() {
+    this.onSearch();
+  }
+
+  onCategoryChange() {
+    this.onSearch();
   }
 
   startSlideShow() {
