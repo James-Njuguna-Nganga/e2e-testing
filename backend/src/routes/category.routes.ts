@@ -10,10 +10,10 @@ import {authenticateJWT,isAdmin} from '../middleware/auth.middleware';
 
 const router = express.Router();
 
-router.post('/create', createCategory);
+router.post('/create',authenticateJWT,isAdmin, createCategory);
 router.get('/all', getAllCategories);
 router.get('/:id', getCategoryById);
-router.put('/:id', updateCategory);
-router.delete('/:id', deleteCategory);
+router.put('/:id',authenticateJWT,isAdmin, updateCategory);
+router.delete('/:id',authenticateJWT,isAdmin, deleteCategory);
 
 export default router;

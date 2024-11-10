@@ -15,7 +15,7 @@ router.post('/reject-farmer', authenticateJWT, isAdmin, UserController.rejectFar
 router.post('/change-role', authenticateJWT, isAdmin, UserController.changeUserRole);
 router.get('/s/search-users', authenticateJWT, isAdmin, UserController.searchUsers);
 router.get('/u/stats', authenticateJWT, isAdmin, UserController.getUserStats);
-router.get('/farmer/all', authenticateJWT, isAdmin, UserController.getFarmers);
+router.get('/farmer/all', UserController.getFarmers);
 router.get('/farmer/requests', authenticateJWT, isAdmin, UserController.getFarmerRequests);
 router.get('/auth/isAdmin', authenticateJWT, isAdmin, UserController.isAdmin);
 router.get('/auth/isFarmer', authenticateJWT, isAdmin, UserController.isFarmer);
