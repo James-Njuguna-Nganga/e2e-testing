@@ -5,6 +5,7 @@ import { RegisterComponent } from './global/auth/register/register.component';
 import { ForgotPasswordComponent } from './global/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './global/auth/reset-password/reset-password.component';
 import { ProfileComponent } from './global/auth/profile/profile.component';
+import { AboutComponent } from './buyers/about/about.component';
 
 export const routes: Routes = [
     //BUYER
@@ -14,7 +15,8 @@ export const routes: Routes = [
     {path: 'register', component:RegisterComponent},
     {path: 'forgot-password', component: ForgotPasswordComponent},
     {path: 'reset-password', component:ResetPasswordComponent},
-    {path: 'profile', component:ProfileComponent}
+    {path: 'profile', component:ProfileComponent},
+    {path: 'about', component:AboutComponent}
 
 
 ];
