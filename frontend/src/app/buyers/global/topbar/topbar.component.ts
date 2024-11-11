@@ -16,6 +16,10 @@ export class TopbarComponent {
 
   constructor(public authService: AuthService) {}
 
+  getFarmerRequestStatus(): string | null {
+    return this.authService.getCurrentUser()?.farmerRequestStatus || null;
+  }
+
   toggleUserMenu(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
