@@ -50,5 +50,27 @@ export interface FarmerResponse {
   farmers: Farmer[];
 }
 
-export interface Responses {
+export interface User {
+  id: string;
+  email: string;
+  phoneNumber: string;
+  firstName: string;
+  lastName: string;
+  avatarUrl: string;
+  role: string;
+  farmerRequestStatus: string | null;
+  createdAt: string;
+  updatedAt: string;
+  resetToken: string | null;
+  resetTokenExpiry: string | null;
 }
+
+export interface AuthResponse {
+  message: string;
+  result: {
+    user: User;
+    token: string;
+  };
+}
+
+

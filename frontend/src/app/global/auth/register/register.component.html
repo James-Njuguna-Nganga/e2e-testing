@@ -1,0 +1,91 @@
+<!-- register.component.html -->
+<app-topbar></app-topbar>
+
+<div class="auth-container relative flex items-center justify-center py-12">
+  <!-- Floating Leaves Animation -->
+  <div class="floating-leaves">
+    <div class="leaf" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="leaf" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="leaf" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="leaf" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="leaf" style="left: 90%; animation-delay: 8s;"></div>
+  </div>
+
+  <div class="auth-card relative z-10">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Join AgroConnect-KE</h1>
+      <p class="text-gray-600">Create your account to get started</p>
+    </div>
+
+    <!-- Alert Messages -->
+    <div *ngIf="errorMessage || successMessage" class="mb-6">
+      <div *ngIf="errorMessage" class="p-4 bg-red-50 border-l-4 border-red-500 rounded-r-md">
+        <div class="flex items-center">
+          <svg class="h-5 w-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+          </svg>
+          <p class="text-sm text-red-700">{{errorMessage}}</p>
+        </div>
+      </div>
+
+      <div *ngIf="successMessage" class="p-4 bg-green-50 border-l-4 border-green-500 rounded-r-md">
+        <div class="flex items-center">
+          <svg class="h-5 w-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <p class="text-sm text-green-700">{{successMessage}}</p>
+        </div>
+      </div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="form-group">
+          <label class="form-label" for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" [(ngModel)]="registerForm.firstName"
+                 class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" [(ngModel)]="registerForm.lastName"
+                 class="form-input" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" id="email" name="email" [(ngModel)]="registerForm.email"
+               class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="phoneNumber">Phone Number</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" [(ngModel)]="registerForm.phoneNumber"
+               class="form-input" placeholder="+254..." required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="registerForm.password"
+               class="form-input" required>
+      </div>
+
+      <button type="submit" [disabled]="isLoading" class="submit-button">
+        <span *ngIf="isLoading" class="animate-spin">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </span>
+        {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+      </button>
+
+      <p class="text-center text-sm text-gray-600">
+        Already have an account? 
+        <a routerLink="/login" class="text-green-600 hover:text-green-500 font-medium transition-colors">Sign in</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

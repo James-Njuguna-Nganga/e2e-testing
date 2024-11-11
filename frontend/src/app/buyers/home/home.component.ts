@@ -9,6 +9,7 @@ import { CategoryService } from '../../services/category.service';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { Product, Category, Farmer } from '../../models/responses';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -48,8 +49,9 @@ export class HomeComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private productService: ProductService,
-    private categoryService: CategoryService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit() {
@@ -118,5 +120,17 @@ export class HomeComponent implements OnInit {
     clearInterval(this.slideInterval);
     this.startSlideShow();
   }
+  // home.component.ts
+viewProduct(productId: string) {
+  this.router.navigate(['/product', productId]);
+}
+
+addToCart(product: any) {
+  // Implement cart functionality
+}
+
+orderNow(product: any) {
+  // Implement direct order functionality
+}
 }
 

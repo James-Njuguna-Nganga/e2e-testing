@@ -1,0 +1,27 @@
+.auth-container {
+  @apply min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center;
+}
+
+.auth-card {
+  @apply bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-4;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.form-input {
+  @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200;
+}
+
+.submit-button {
+  @apply w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 flex items-center justify-center gap-2;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
