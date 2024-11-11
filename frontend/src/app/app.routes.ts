@@ -6,6 +6,8 @@ import { ForgotPasswordComponent } from './global/auth/forgot-password/forgot-pa
 import { ResetPasswordComponent } from './global/auth/reset-password/reset-password.component';
 import { ProfileComponent } from './global/auth/profile/profile.component';
 import { AboutComponent } from './buyers/about/about.component';
+import { CartComponent } from './buyers/cart/cart.component';
+import { ProductComponent } from './buyers/product/product.component';
 
 export const routes: Routes = [
     //BUYER
@@ -16,7 +18,9 @@ export const routes: Routes = [
     {path: 'forgot-password', component: ForgotPasswordComponent},
     {path: 'reset-password', component:ResetPasswordComponent},
     {path: 'profile', component:ProfileComponent},
-    {path: 'about', component:AboutComponent}
+    {path: 'about', component:AboutComponent},
+    {path: 'cart', component:CartComponent},
+    {path: 'product/:id', component: ProductComponent}
 
 
 ];

@@ -19,7 +19,6 @@
   
         <!-- Right side icons -->
         <div class="flex items-center space-x-6">
-          <ng-container *ngIf="authService.isLoggedIn()">
             <!-- Cart Icon -->
             <a routerLink="/cart" class="flex items-center space-x-2 text-gray-700 hover:text-green-600 transition-colors">
               <div class="relative">
@@ -28,9 +27,7 @@
                 </svg>
               </div>
               <span class="text-sm">Cart</span>
-            </a>
-          </ng-container>
-  
+            </a>  
           <!-- User Icon with Dropdown -->
           <div class="relative user-menu-container">
             <button 

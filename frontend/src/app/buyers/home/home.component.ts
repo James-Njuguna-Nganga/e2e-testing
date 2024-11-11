@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { Product, Category, Farmer } from '../../models/responses';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -45,13 +46,16 @@ export class HomeComponent implements OnInit {
   searchQuery: string = '';
   selectedFarmer: string = '';
   selectedCategory: string = '';
+  showCartNotification = false;
+  notificationMessage = '';
 
   constructor(
     public authService: AuthService,
     private productService: ProductService,
     private userService: UserService,
     private router: Router,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private cartService: CartService  // Add CartService
   ) {}
 
   ngOnInit() {
@@ -125,10 +129,26 @@ viewProduct(productId: string) {
   this.router.navigate(['/product', productId]);
 }
 
-addToCart(product: any) {
-  // Implement cart functionality
-}
+addToCart(product: any, event: Event) {
+  event.stopPropagation(); // Prevent navigation when clicking cart button
+  
+  // if (!this.authService.isLoggedIn()) {
+  //   this.router.navigate(['/login']);
+  //   return;
+  // }
 
+  this.cartService.addToCart(product.id);
+  
+  // Show notification
+  this.notificationMessage = 'Added to cart!';
+  this.showCartNotification = true;
+  setTimeout(() => {
+    this.showCartNotification = false;
+  }, 3000);
+}
+isProductInCart(productId: string): boolean {
+  return this.cartService.isProductInCart(productId);
+}
 orderNow(product: any) {
   // Implement direct order functionality
 }

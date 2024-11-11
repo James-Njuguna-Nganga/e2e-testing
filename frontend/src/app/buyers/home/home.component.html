@@ -88,8 +88,8 @@
       <!-- Products Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div *ngFor="let product of products" 
-             class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer"
-             [routerLink]="['/product', product.id]">
+             class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer relative"
+             (click)="viewProduct(product.id)">
           <img [src]="product.imageUrl" class="w-full h-48 object-cover" [alt]="product.title">
           <div class="p-4">
             <div class="mb-4">
@@ -102,12 +102,20 @@
                 <span class="text-sm text-gray-500">{{product.quantity}} {{product.unit}} left</span>
               </div>
               <div class="flex flex-col space-y-2">
-                <button (click)="addToCart(product); $event.stopPropagation()" 
-                        class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+                <button (click)="addToCart(product, $event)" 
+                        [disabled]="isProductInCart(product.id)"
+                        [ngClass]="{'bg-gray-400 cursor-not-allowed': isProductInCart(product.id),
+                                   'bg-green-600 hover:bg-green-700': !isProductInCart(product.id)}"
+                        class="w-full text-white px-4 py-2 rounded transition-colors flex items-center justify-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" 
+                       class="h-5 w-5" 
+                       [class.text-green-200]="isProductInCart(product.id)"
+                       viewBox="0 0 20 20" 
+                       fill="currentColor">
+                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z"/>
+                    <path d="M16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
                   </svg>
-                  Add to Cart
+                  {{ isProductInCart(product.id) ? 'Added to Cart' : 'Add to Cart' }}
                 </button>
                 <div class="flex gap-2">
                   <button (click)="viewProduct(product.id); $event.stopPropagation()" 
@@ -130,6 +138,12 @@
                 class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors">
           View All Products
         </button>
+      </div>
+
+      <!-- Cart Notification -->
+      <div *ngIf="showCartNotification"
+           class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 translate-y-0 opacity-100">
+        {{notificationMessage}}
       </div>
     </div>
   </section>
