@@ -125,8 +125,33 @@ export class HomeComponent implements OnInit {
     this.startSlideShow();
   }
   // home.component.ts
+orderNow(product: any, event: Event) {
+  event.stopPropagation(); // Prevent event bubbling
+  
+  if (!this.authService.isLoggedIn()) {
+    this.router.navigate(['/login']);
+    return;
+  }
+
+  // Navigate to order with product ID and default quantity
+  this.router.navigate(['/order'], {
+    queryParams: {
+      productId: product.id,
+      quantity: 1
+    }
+  });
+}
+
 viewProduct(productId: string) {
   this.router.navigate(['/product', productId]);
+}
+
+navigateToCart() {
+  if (!this.authService.isLoggedIn()) {
+    this.router.navigate(['/login']);
+    return;
+  }
+  this.router.navigate(['/cart']);
 }
 
 addToCart(product: any, event: Event) {
@@ -148,9 +173,6 @@ addToCart(product: any, event: Event) {
 }
 isProductInCart(productId: string): boolean {
   return this.cartService.isProductInCart(productId);
-}
-orderNow(product: any) {
-  // Implement direct order functionality
 }
 }
 

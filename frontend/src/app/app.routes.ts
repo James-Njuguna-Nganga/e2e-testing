@@ -8,6 +8,9 @@ import { ProfileComponent } from './global/auth/profile/profile.component';
 import { AboutComponent } from './buyers/about/about.component';
 import { CartComponent } from './buyers/cart/cart.component';
 import { ProductComponent } from './buyers/product/product.component';
+import { OrderComponent } from './buyers/order/order.component';
+import { ProductsComponent } from './buyers/products/products.component';
+import { OrdersComponent } from './buyers/orders/orders.component';
 
 export const routes: Routes = [
     //BUYER
@@ -20,7 +23,10 @@ export const routes: Routes = [
     {path: 'profile', component:ProfileComponent},
     {path: 'about', component:AboutComponent},
     {path: 'cart', component:CartComponent},
-    {path: 'product/:id', component: ProductComponent}
+    {path: 'product/:id', component: ProductComponent},
+    {path: 'order', component: OrderComponent},
+    {path: 'products', component:ProductsComponent},
+    {path: 'orders', component:OrdersComponent}
 
 
 ];

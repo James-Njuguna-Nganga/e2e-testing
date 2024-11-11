@@ -1,0 +1,103 @@
+<app-topbar></app-topbar>
+
+<div class="min-h-screen bg-gray-50 py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">My Orders</h1>
+      <div class="flex gap-4">
+        <select (change)="filterOrders($event)" 
+                class="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+          <option value="all">All Orders</option>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center items-center h-64">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+    </div>
+
+    <!-- No Orders State -->
+    <div *ngIf="!isLoading && orders.length === 0" 
+         class="bg-white rounded-lg shadow-md p-8 text-center">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">No orders yet</h3>
+      <p class="mt-1 text-sm text-gray-500">Start shopping to see your orders here.</p>
+      <div class="mt-6">
+        <a routerLink="/products" 
+           class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+          Browse Products
+        </a>
+      </div>
+    </div>
+
+    <!-- Orders List -->
+    <div class="space-y-6">
+      <div *ngFor="let order of orders" 
+           class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <!-- Order Header -->
+        <div class="p-6 border-b border-gray-200">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-sm text-gray-500">Order ID</p>
+              <p class="font-medium">{{order.id}}</p>
+              <p class="text-sm text-gray-500 mt-2">
+                Placed on {{order.createdAt | date:'medium'}}
+              </p>
+            </div>
+            <div class="flex flex-col items-end">
+              <span class="font-bold text-xl text-gray-900">
+                KES {{order.totalPrice}}
+              </span>
+              <div class="flex gap-2 mt-2">
+                <span [ngClass]="{
+                  'bg-yellow-100 text-yellow-800': order.status === 'PENDING',
+                  'bg-green-100 text-green-800': order.status === 'COMPLETED',
+                  'bg-red-100 text-red-800': order.status === 'CANCELLED'
+                }" class="px-3 py-1 rounded-full text-sm font-medium">
+                  {{order.status}}
+                </span>
+                <span [ngClass]="{
+                  'bg-yellow-100 text-yellow-800': order.paymentStatus === 'PENDING',
+                  'bg-green-100 text-green-800': order.paymentStatus === 'COMPLETED',
+                  'bg-red-100 text-red-800': order.paymentStatus === 'FAILED'
+                }" class="px-3 py-1 rounded-full text-sm font-medium">
+                  {{order.paymentStatus}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="p-6">
+          <div class="space-y-4">
+            <div *ngFor="let item of order.orderItems" 
+                 class="flex items-center space-x-4">
+              <img [src]="item.produce.imageUrl" 
+                   [alt]="item.produce.title"
+                   class="w-16 h-16 object-cover rounded-lg">
+              <div class="flex-1">
+                <h4 class="font-medium">{{item.produce.title}}</h4>
+                <p class="text-sm text-gray-500">
+                  {{item.quantity}} {{item.produce.unit}} × KES {{item.price}}
+                </p>
+              </div>
+              <p class="font-medium">
+                KES {{parseInt(item.price) * item.quantity}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

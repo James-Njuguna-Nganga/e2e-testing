@@ -55,6 +55,7 @@ export class CartService {
       this.saveCart(currentItems);
     }
   }
+
   isProductInCart(productId: string): boolean {
     const currentItems = this.cartItemsSubject.value;
     return currentItems.some(item => item.productId === productId);
@@ -63,5 +64,9 @@ export class CartService {
   clearCart() {
     localStorage.removeItem(this.cartKey);
     this.cartItemsSubject.next([]);
+  }
+
+  getCartItems(): CartItem[] {
+    return this.cartItemsSubject.value;
   }
 }

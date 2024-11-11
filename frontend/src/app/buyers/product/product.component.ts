@@ -50,11 +50,19 @@ export class ProductComponent implements OnInit {
     this.isInCart = true;
   }
 
-  orderNow() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    // Implement order functionality
+orderNow() {
+  if (!this.authService.isLoggedIn()) {
+    this.router.navigate(['/login']);
+    return;
   }
+
+  this.router.navigate(['/order'], {
+    queryParams: {
+      productId: this.product.id,
+      quantity: 1
+    }
+  });
+}
+    // Implement order functionality
+  
 }

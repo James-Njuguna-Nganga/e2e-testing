@@ -2,11 +2,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { TopbarComponent } from '../global/topbar/topbar.component';
 import { FooterComponent } from '../global/footer/footer.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +22,9 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -53,7 +56,13 @@ export class CartComponent implements OnInit {
   }
 
   checkout() {
-    // Will implement in next phase
-    console.log('Proceeding to checkout...');
+    if (!this.cartItems.length) return;
+    
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+  
+    this.router.navigate(['/order']);
   }
 }
