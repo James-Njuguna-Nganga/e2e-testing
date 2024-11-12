@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Scrollbar */
+@layer utilities {
+  /* Firefox */
+  * {
+    scrollbar-width:auto;
+    scrollbar-color: #22c55e #e5e7eb;
+    scroll-behavior: smooth;
+  }
+
+  /* Chrome, Edge, Safari */
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply bg-gray-200 rounded-full;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply bg-green-500 rounded-full;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    @apply bg-green-600;
+  }
+
+  /* Dark mode */
+  .dark *::-webkit-scrollbar-track {
+    @apply bg-gray-700;
+  }
+
+  .dark *::-webkit-scrollbar-thumb {
+    @apply bg-green-600;
+  }
+
+  .dark *::-webkit-scrollbar-thumb:hover {
+    @apply bg-green-700;
+  }
+}

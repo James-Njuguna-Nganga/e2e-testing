@@ -11,6 +11,13 @@ import { ProductComponent } from './buyers/product/product.component';
 import { OrderComponent } from './buyers/order/order.component';
 import { ProductsComponent } from './buyers/products/products.component';
 import { OrdersComponent } from './buyers/orders/orders.component';
+import { FarmerLayoutComponent } from './farmer/layout/farmer-layout/farmer-layout.component';
+import {FarmerGuard} from './guards/farmer.guard';
+import { FarmerDashboardComponent } from './farmer/dashboard/dashboard.component';
+import { FarmerProductsComponent } from './farmer/products/products.component';
+import { FarmerOrdersComponent } from './farmer/orders/orders.component';
+import { FarmerAnalyticsComponent } from './farmer/analytics/analytics.component';
+import { FarmerProfileComponent } from './farmer/profile/profile.component';
 
 export const routes: Routes = [
     //BUYER
@@ -26,7 +33,22 @@ export const routes: Routes = [
     {path: 'product/:id', component: ProductComponent},
     {path: 'order', component: OrderComponent},
     {path: 'products', component:ProductsComponent},
-    {path: 'orders', component:OrdersComponent}
+    {path: 'orders', component:OrdersComponent},
+
+    //FARMER
+    {
+        path: 'farmer',
+        component: FarmerLayoutComponent,
+        canActivate: [FarmerGuard],
+        children: [
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+          { path: 'dashboard', component: FarmerDashboardComponent },
+          { path: 'products', component: FarmerProductsComponent },
+          { path: 'orders', component: FarmerOrdersComponent },
+          { path: 'analytics', component: FarmerAnalyticsComponent },
+          { path: 'profile', component: FarmerProfileComponent }
+        ]
+      }
 
 
 ];

@@ -28,14 +28,8 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    // Validate inputs
-    if (!this.loginForm.email || !this.loginForm.email.trim()) {
-      this.errorMessage = 'Email is required';
-      return;
-    }
-
-    if (!this.loginForm.password || !this.loginForm.password.trim()) {
-      this.errorMessage = 'Password is required';
+    if (!this.loginForm.email?.trim() || !this.loginForm.password?.trim()) {
+      this.errorMessage = 'Email and password are required';
       return;
     }
 
@@ -51,7 +45,16 @@ export class LoginComponent {
     this.authService.login(this.loginForm).subscribe({
       next: (response) => {
         this.successMessage = response.message;
-        setTimeout(() => this.router.navigate(['/home']), 1500);
+        
+        // Get user role and navigate accordingly
+        const role = response.result.user.role;
+        setTimeout(() => {
+          if (role === 'FARMER') {
+            this.router.navigate(['/farmer/dashboard']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+        }, 1500);
       },
       error: (error) => {
         this.errorMessage = error.error.message || 'Login failed';

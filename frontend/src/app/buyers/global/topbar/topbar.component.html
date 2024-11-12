@@ -11,7 +11,7 @@
           <a routerLink="/home" class="nav-link">Home</a>
           <a routerLink="/about" class="nav-link">About</a>
           <a routerLink="/products" class="nav-link">Products</a>
-          <a routerLink="/contact" class="nav-link">Contact Us</a>
+          <a href="#contact" class="nav-link">Contact Us</a>
           <ng-container *ngIf="authService.isLoggedIn()">
             <a routerLink="/orders" class="nav-link">My Orders</a>
           </ng-container>

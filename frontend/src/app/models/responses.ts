@@ -73,4 +73,33 @@ export interface AuthResponse {
   };
 }
 
+export interface Order {
+  id: string;
+  userId: string;
+  totalPrice: string;
+  status: 'PENDING' | 'COMPLETED' | 'CANCELLED';
+  paymentStatus: 'PENDING' | 'COMPLETED' | 'FAILED';
+  paymentMethod: string;
+  verificationCode: string | null;
+  paymentId: string;
+  verified: boolean;
+  createdAt: string;
+  updatedAt: string;
+  orderItems: OrderItem[];
+  user: User;
+}
+
+export interface OrderItem {
+  id: string;
+  orderId: string;
+  produceId: string;
+  quantity: number;
+  price: string;
+  produce: Product;
+}
+
+export interface OrderResponse {
+  orders: Order[];
+}
+
 
