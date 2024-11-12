@@ -24,6 +24,9 @@ import { AdminDashboardComponent } from './admin/dashboard/dashboard.component';
 import { AdminProductsComponent } from './admin/products/products.component';
 import { AdminUsersComponent } from './admin/users/users.component';
 import { AdminPaymentsComponent } from './admin/payments/payments.component';
+import { AdminAnalyticsComponent } from './admin/analytics/analytics.component';
+import { AdminOrdersComponent } from './admin/orders/orders.component';
+import { AdminProfileComponent } from './admin/profile/profile.component';
 
 export const routes: Routes = [
     //BUYER
@@ -65,10 +68,11 @@ export const routes: Routes = [
           { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
           { path: 'dashboard', component: AdminDashboardComponent },
           { path: 'products', component: AdminProductsComponent },
-          { path: 'orders', component: OrdersComponent },
+          { path: 'orders', component: AdminOrdersComponent },
           { path: 'users', component: AdminUsersComponent },
           { path: 'payments', component: AdminPaymentsComponent },
-          { path: 'analytics', component: FarmerAnalyticsComponent },
+          { path: 'analytics', component: AdminAnalyticsComponent },
+          { path: 'profile', component: AdminProfileComponent }
         ]
       },
 

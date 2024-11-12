@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order.service';
 import { UserService } from '../../services/user.service';
 import { ProductService } from '../../services/product.service';
-import { Order } from '../../models/responses';
+import { Order, OrderResponse } from '../../models/responses';
 @Component({
   selector: 'app-admin-analytics',
   standalone: true,
@@ -134,22 +134,22 @@ export class AdminAnalyticsComponent implements OnInit {
   private loadAnalyticsData() {
     this.orderService.getAllOrders().subscribe({
       next: (response) => {
-        const orders = response.orders;
-        this.totalOrders = orders.length;
-        this.totalRevenue = orders.reduce((sum:any, order: Order) => sum + parseFloat(order.totalPrice), 0);
-
+        const completedOrders = response.orders.filter((order: Order) => order.status === 'COMPLETED');
+        this.totalOrders = completedOrders.length;
+        this.totalRevenue = completedOrders.reduce((sum: number, order: Order) => sum + parseFloat(order.totalPrice), 0);
+  
         // Get unique customers
-        const customerIds = new Set(orders.map((order: Order) => order.userId));
+        const customerIds = new Set(completedOrders.map((order: Order) => order.userId));
         this.totalCustomers = customerIds.size;
-
+  
         // Get recent orders
-        this.recentOrders = orders.slice(0, 5);
-
-        this.loadTopProducts(orders);
+        this.recentOrders = completedOrders.slice(0, 5);
+  
+        this.loadTopProducts(completedOrders);
       },
       error: (error) => console.error('Error fetching orders:', error)
     });
-
+  
     this.productService.getAllProducts().subscribe({
       next: (response) => {
         this.totalProducts = response.produce.length;

@@ -18,8 +18,10 @@ export class UserService {
       'Authorization': `Bearer ${token}`
     });
   }
-  getAllUsers(): Observable<{ users: User[] }> {
-    return this.http.get<{ users: User[] }>(`${this.apiUrl}/all`);
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/all/users`, {
+      headers: this.getAuthHeaders()
+    });
   }
   approveFarmerRequest(userId: string): Observable<User> {
     return this.http.post<User>(
@@ -57,14 +59,14 @@ export class UserService {
   }
 
   getFarmerRequests(skip = 0, take = 10): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/farmer/requests?skip=${skip}&take=${take}`);
+    return this.http.get<User[]>(`${this.apiUrl}/farmer/requests?skip=${skip}&take=${take}`, { headers: this.getAuthHeaders() });
   }
 
   getAllFarmers(skip = 0, take = 10): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/farmer/all?skip=${skip}&take=${take}`);
+    return this.http.get<User[]>(`${this.apiUrl}/farmer/all?skip=${skip}&take=${take}`, { headers: this.getAuthHeaders() });
   }
 
   getUserStats(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/u/stats`);
+    return this.http.get(`${this.apiUrl}/u/stats`, { headers: this.getAuthHeaders() });
   }
 }

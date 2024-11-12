@@ -45,4 +45,9 @@ export class OrderService {
   getAllOrders(): Observable<any> {
     return this.http.get(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
   }
+  updateOrderStatus(orderId: string, status: string): Observable<any> {
+    const url = `${this.apiUrl}/${orderId}`;
+    const body = { status };
+    return this.http.put(url, body, { headers: this.getAuthHeaders() });
+  }
 }

@@ -22,8 +22,9 @@ export class AdminUsersComponent implements OnInit {
 
   loadUsers() {
     this.userService.getAllUsers().subscribe({
-      next: (response) => {
-        this.users = response.users;
+      next: (users) => {
+        this.users = users; // Assign the array directly
+        console.log('Fetched Users:', this.users);
         this.filterByRole();
       },
       error: (error) => console.error('Error loading users:', error)
@@ -31,9 +32,12 @@ export class AdminUsersComponent implements OnInit {
   }
 
   filterByRole() {
-    this.filteredUsers = this.selectedRole ? 
-      this.users.filter(user => user.role === this.selectedRole) : 
-      this.users;
+    if (this.selectedRole) {
+      this.filteredUsers = this.users.filter(user => user.role === this.selectedRole);
+    } else {
+      this.filteredUsers = [...this.users];
+    }
+    console.log('Filtered Users:', this.filteredUsers); // Add this line
   }
 
   approveFarmerRequest(userId: string) {
