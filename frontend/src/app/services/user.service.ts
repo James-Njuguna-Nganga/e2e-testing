@@ -18,6 +18,23 @@ export class UserService {
       'Authorization': `Bearer ${token}`
     });
   }
+  getAllUsers(): Observable<{ users: User[] }> {
+    return this.http.get<{ users: User[] }>(`${this.apiUrl}/all`);
+  }
+  approveFarmerRequest(userId: string): Observable<User> {
+    return this.http.post<User>(
+      `${this.apiUrl}/approve-farmer`,
+      { userId },
+      { headers: this.getAuthHeaders() }
+    );
+  }
+  rejectFarmerRequest(userId: string): Observable<User> {
+    return this.http.post<User>(
+      `${this.apiUrl}/reject-farmer`,
+      { userId },
+      { headers: this.getAuthHeaders() }
+    );
+  }
 
   getUserById(id: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${id}`);

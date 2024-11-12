@@ -39,4 +39,10 @@ export class OrderService {
   getFarmerOrders(): Observable<any> {
     return this.http.get(`${this.apiUrl}/farmer-orders`, { headers: this.getAuthHeaders() });
   }
+  getOrderDetails(orderId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${orderId}`, { headers: this.getAuthHeaders() });
+  }
+  getAllOrders(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
+  }
 }

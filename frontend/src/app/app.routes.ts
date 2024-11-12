@@ -18,6 +18,12 @@ import { FarmerProductsComponent } from './farmer/products/products.component';
 import { FarmerOrdersComponent } from './farmer/orders/orders.component';
 import { FarmerAnalyticsComponent } from './farmer/analytics/analytics.component';
 import { FarmerProfileComponent } from './farmer/profile/profile.component';
+import { AdminLayoutComponent } from './admin/layout/layout.component';
+import { AdminGuard } from './guards/admin.guard';
+import { AdminDashboardComponent } from './admin/dashboard/dashboard.component';
+import { AdminProductsComponent } from './admin/products/products.component';
+import { AdminUsersComponent } from './admin/users/users.component';
+import { AdminPaymentsComponent } from './admin/payments/payments.component';
 
 export const routes: Routes = [
     //BUYER
@@ -48,7 +54,25 @@ export const routes: Routes = [
           { path: 'analytics', component: FarmerAnalyticsComponent },
           { path: 'profile', component: FarmerProfileComponent }
         ]
-      }
+      },
+
+      //ADMIN
+      {
+        path: 'admin',
+        component: AdminLayoutComponent,
+        canActivate: [AdminGuard],
+        children: [
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+          { path: 'dashboard', component: AdminDashboardComponent },
+          { path: 'products', component: AdminProductsComponent },
+          { path: 'orders', component: OrdersComponent },
+          { path: 'users', component: AdminUsersComponent },
+          { path: 'payments', component: AdminPaymentsComponent },
+          { path: 'analytics', component: FarmerAnalyticsComponent },
+        ]
+      },
+
+      { path: '**', redirectTo: 'home' }
 
 
 ];

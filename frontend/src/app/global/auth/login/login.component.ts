@@ -51,7 +51,10 @@ export class LoginComponent {
         setTimeout(() => {
           if (role === 'FARMER') {
             this.router.navigate(['/farmer/dashboard']);
-          } else {
+          } else if(role === 'ADMIN') {
+            this.router.navigate(['/admin/dashboard']);
+          }
+          else {
             this.router.navigate(['/home']);
           }
         }, 1500);
