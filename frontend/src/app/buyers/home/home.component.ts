@@ -79,7 +79,9 @@ export class HomeComponent implements OnInit {
       next: (response) => {
         this.categories = response.categories;
       },
-      error: (error) => console.error('Error loading categories:', error)
+      error: (error) => {
+        console.error('Error loading categories:', error);
+      }
     });
   }
 

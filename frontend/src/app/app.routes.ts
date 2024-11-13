@@ -27,6 +27,7 @@ import { AdminPaymentsComponent } from './admin/payments/payments.component';
 import { AdminAnalyticsComponent } from './admin/analytics/analytics.component';
 import { AdminOrdersComponent } from './admin/orders/orders.component';
 import { AdminProfileComponent } from './admin/profile/profile.component';
+import { CategoriesComponent } from './admin/categories/categories.component';
 
 export const routes: Routes = [
     //BUYER
@@ -72,7 +73,8 @@ export const routes: Routes = [
           { path: 'users', component: AdminUsersComponent },
           { path: 'payments', component: AdminPaymentsComponent },
           { path: 'analytics', component: AdminAnalyticsComponent },
-          { path: 'profile', component: AdminProfileComponent }
+          { path: 'profile', component: AdminProfileComponent },
+          {path: 'categories', component:CategoriesComponent},
         ]
       },
 
