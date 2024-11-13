@@ -59,8 +59,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJkYTQ1MGE0L
 Content-Type: application/json
 
 {
-    "userId": "4c542244-91b3-411d-b9b3-dc6add661fc6",
-    "newRole": "BUYER"
+    "userId": "81639ce7-8566-4aaa-a2b1-01219f02013a",
+    "newRole": "ADMIN"
 }
 
 ###GET USER STATS

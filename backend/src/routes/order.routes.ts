@@ -13,7 +13,7 @@ router.post('/', OrderController.createOrder);
 router.get('/my-orders', OrderController.getUserOrders);
 
 // Farmer routes
-router.get('/farmer-orders', authorizeRole(['FARMER']), OrderController.getFarmerOrders);
+router.get('/farmer-orders', authorizeRole(['FARMER', 'ADMIN']), OrderController.getFarmerOrders);
 
 // Admin routes
 router.get('/all', authorizeRole(['ADMIN']), OrderController.getAllOrders);
