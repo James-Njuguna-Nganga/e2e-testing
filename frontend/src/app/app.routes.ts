@@ -74,7 +74,7 @@ export const routes: Routes = [
           { path: 'payments', component: AdminPaymentsComponent },
           { path: 'analytics', component: AdminAnalyticsComponent },
           { path: 'profile', component: AdminProfileComponent },
-          {path: 'categories', component:CategoriesComponent},
+          { path: 'categories', component:CategoriesComponent},
         ]
       },
 
